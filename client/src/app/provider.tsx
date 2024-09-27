@@ -1,27 +1,22 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './../stores/store';
 
-
 interface ProviderProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const Providers: React.FC<ProviderProps> = ({ children }) => {
   return (
     <>
-       <Provider store={store}>
-       <PersistGate loading={null} persistor={persistor}>
-
-            {children}
-            </PersistGate>
-
-            </Provider>
-
-    
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          {children}
+        </PersistGate>
+      </Provider>
     </>
-  )
-}
+  );
+};
 
-export default Providers
+export default Providers;
