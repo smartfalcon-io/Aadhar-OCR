@@ -1,7 +1,7 @@
  
  function HomePage() {
    return (
-     <div className="font-extralight text-red-600 flex justify-center items-center">HomePage</div>
+     <div className="font-extralight text-red-600 flex justify-center items-center">Homepage</div>
    )
  }
  
