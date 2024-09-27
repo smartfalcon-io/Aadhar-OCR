@@ -1,13 +1,14 @@
 import { Application } from "express";
 import connectDB from "./config/mongoDB";
 import express from "express";
-// import route from "./app/routes/routes";
+import route from "./app/routes/routes";
 import http from 'http'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import helmet from "helmet";
 import logger from 'morgan'
 import { limiter } from './utils/rateLimitter'
+import { config } from "./config/config";
 
 class App{
     public app:Application;
@@ -23,17 +24,18 @@ class App{
     
     private applyMiddleware(): void {
         this.app.use(express.json({ limit: "50mb" }));
-        this.app.use(
-          cors()
-        );
+        this.app.use(cors({
+            origin: config.CORS_URL,
+            credentials: true
+        }));
         this.app.use(helmet());
         this.app.use(logger("dev")); 
         this.app.use(cookieParser());
+        this.app.use('/api/v1/',route)
         this.app.use(limiter)
     }
 
     private routes():void{
-        // Error-handling middleware
         this.app.use(( req, res, next) => {
             res.status(500).send('Something broke!');
         });

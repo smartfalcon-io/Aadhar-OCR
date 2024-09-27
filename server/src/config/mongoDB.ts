@@ -12,7 +12,7 @@ const connectDB=async():Promise<void>=>{
             {
                 throw new Error("MONGO_URL is not defined in environment variables.")
             }
-            await mongoose.connect(`${MONGO_URL}/aadhar-ocr`) 
+            await mongoose.connect(`${MONGO_URL}aadhar-ocr`) 
             console.log("database Connected");
     } catch (error) { 
         console.error('Error connecting to MongoDB:', error) 

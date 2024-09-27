@@ -1,7 +1,13 @@
+import ShowCase from "../../components/ShowCase"
+import UploadSection from "../../components/UploadSection"
+
  
- function HomePage() {
+ const HomePage = () =>{
    return (
-     <div className="font-extralight text-red-600 flex justify-center items-center">Homepage</div>
+    <div className="w-full bg-slate-400 flex justify-between h-screen">
+      <UploadSection/>
+      <ShowCase/>
+    </div>
    )
  }
  
