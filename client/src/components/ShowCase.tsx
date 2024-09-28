@@ -8,12 +8,11 @@ const ShowCase: React.FC = () => {
   const { aadharDetails, isLoading } = useSelector((state: RootState) => state.aadharSlice);
 
   const ShimmerEffect = () => (
-    <div className="animate-pulse">
-      <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-      <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
-      <div className="h-4 bg-gray-200 rounded w-5/6 mb-4"></div>
-      <div className="h-4 bg-gray-200 rounded w-2/3 mb-4"></div>
-      <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+    <div className="animate-pulse space-y-3 mt-12 transition-all duration-100">
+      <div className="h-5 bg-gray-200 rounded w-3/4 mb-4"></div>
+      <div className="h-5 bg-gray-200 rounded w-1/2 mb-4"></div>
+      <div className="h-5 bg-gray-200 rounded w-5/6 mb-4"></div>
+      <div className="h-5 bg-gray-200 rounded w-2/3 mb-4"></div>
     </div>
   );
 
@@ -23,11 +22,19 @@ const ShowCase: React.FC = () => {
     }
 
     if (!aadharDetails) {
-      return <p className="text-gray-500">No Aadhaar data available. Please upload and parse an Aadhaar card.</p>;
+      return (<div className='text-center  items-center mt-4'>
+        <p className="text-gray-500">No Aadhaar data available. Please upload and parse an Aadhaar card.</p>
+        <div className='flex justify-center'>
+        <iframe className='h-72 ' src="https://lottie.host/embed/fc3bf61a-2796-40f5-94de-3b4bb1749edc/B1KxEpdPs5.json"></iframe>  
+
+        </div>
+          </div>
+
+      )
     }
 
     return (
-      <form className="max-w-md mx-auto p-7 space-y-6">
+      <form className="max-w-md mx-auto p-7 mt-12 space-y-6">
         <div className="grid md:grid-cols-2 md:gap-6">
           <InputField label="Aadhaar Number" value={aadharDetails.aadhaarNumber} />
           <InputField label="Aadhaar Name" value={aadharDetails.name} />
@@ -42,7 +49,7 @@ const ShowCase: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 w-full lg:w-auto mt-10 lg:mt-10 shadow-shadowAll p-5">
+    <div className="flex-1 w-full h-screen md:w-1/2 p-20  ">
       <h3 className="font-medium underline flex justify-center">Response</h3>
       {renderContent()}
     </div>
