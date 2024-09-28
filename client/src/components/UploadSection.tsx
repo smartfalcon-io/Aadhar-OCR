@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useParseAadharMutation } from '../api/axiosApi';
-import { toast, Toaster } from 'sonner';
+import { toast } from 'sonner';
 import { setParsedData,setLoading } from '../stores/aadharSlice';
 import { useDispatch } from 'react-redux';
+import upload from '../assets/images/cloud-upload.png'
 
 const UploadSection: React.FC = () => {
   const [frontImage, setFrontImg] = useState<string | ArrayBuffer | null>(null);
@@ -75,7 +76,7 @@ const UploadSection: React.FC = () => {
   const handleSubmit = async () => {
     try {
       if (!frontFile || !backFile) {
-        toast.error('Add both front side and back side of aadhaar');
+        toast.warning('Add both front side and back side of aadhaar');
       } else {
         dispatch(setParsedData(null))
         const response = await parseAadhar({
@@ -97,14 +98,15 @@ const UploadSection: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 space-y-10 w-full lg:w-auto">
-      <Toaster position="top-center" expand={false} richColors />
-      <div>
-        <h2 className="font-medium pl-2 pb-3">Aadhaar Front</h2>
+    <div className="flex-1 justify-center space-y-8 px-12 py-12 md:h-screen w-full md:w-1/2 font-PlusJakartaSans">
+      <div className='border-2 border-dashed rounded-lg flex justify-center '>
+        
         <div
-          className="bg-white w-full lg:w-96 h-auto p-4 text-center cursor-pointer rounded-md shadow-shadowAll"
+          className="bg-white w-full  lg:w-96 h-60 p-4 text-center cursor-pointer rounded-md shadow-shadowAll"
           onClick={handleImageFront}
         >
+                <h2 className="font-PlusJakartaSans1000 pt-2 pb-3">Aadhaar Front</h2>
+
           {frontImage ? (
             <img
               src={frontImage as string}
@@ -112,10 +114,10 @@ const UploadSection: React.FC = () => {
               className="h-36 rounded-md mx-auto"
             />
           ) : (
-            <img src="/path/to/upload-icon.png" alt="upload" className="mx-auto w-10 h-8" />
+            <img src={upload} alt="upload" className="mx-auto my-2 h-20" />
           )}
-          <p className={`text-blue-500 ${frontImage ? 'bg-slate-200 hover:bg-slate-300 rounded-xl mt-4' : 'mt-2'}`}>
-            {frontImage ? 'Change image' : 'Click here to Upload/Capture'}
+          <p className={`text-blue-500 ${frontImage ? 'rounded-xl mt-4' : 'mt-2'}`}>
+            {frontImage ? '' : 'Click here to Upload/Capture'}
           </p>
           <input
             type="file"
@@ -125,12 +127,14 @@ const UploadSection: React.FC = () => {
           />
         </div>
       </div>
-      <div className="mt-10">
-        <h2 className="font-medium pl-2 pb-3">Aadhaar Back</h2>
+      <div className='border-2 border-dashed rounded-lg flex justify-center '>
+        
         <div
-          className="bg-white w-full lg:w-96 h-auto p-4 text-center cursor-pointer rounded-md shadow-shadowAll"
+          className="bg-white w-full  lg:w-96 h-60 p-4 text-center cursor-pointer rounded-md shadow-shadowAll"
           onClick={handleImageBack}
         >
+                <h2 className="font-PlusJakartaSans1000 pt-2 pb-3">Aadhaar Back</h2>
+
           {backImage ? (
             <img
               src={backImage as string}
@@ -138,10 +142,10 @@ const UploadSection: React.FC = () => {
               className="h-36 rounded-md mx-auto"
             />
           ) : (
-            <img src="/path/to/upload-icon.png" alt="upload" className="mx-auto w-10 h-8" />
+            <img src={upload} alt="upload" className="mx-auto my-2 h-20" />
           )}
-          <p className={`text-blue-500 ${backImage ? 'bg-slate-200 hover:bg-slate-300 rounded-xl mt-4' : 'mt-2'}`}>
-            {backImage ? 'Change image' : 'Click here to Upload/Capture'}
+          <p className={`text-blue-500 ${backImage ? 'bg-[#FFB859] hover:bg-slate-300 rounded-md m-2' : 'mt-2'}`}>
+            {backImage ? '' : 'Click here to Upload/Capture'}
           </p>
           <input
             type="file"
@@ -151,10 +155,10 @@ const UploadSection: React.FC = () => {
           />
         </div>
       </div>
-      <div onClick={handleSubmit} className="flex bg-blue-400 mt-5 p-2 w-full lg:w-96 rounded-xl cursor-pointer hover:bg-blue-500">
+      <div onClick={handleSubmit} className="flex justify-center mx-auto bg-[#FFB859] py-2 w-1/2 rounded-lg shadow-md shadow-[#FFB859] border border-white cursor-pointer hover:scale-105 transition-all duration-500 delay-150">
         {!isLoading ? (
-          <button className="mx-auto font-semibold text-white">
-            PARSE AADHAAR
+          <button className=" text-black  text-lg font-PlusJakartaSans1000">
+            <span>Parse Aadhar</span>
           </button>
         ) : (
           <ul className="max-w-md space-y-2 text-white list-inside dark:text-white mx-auto cursor-not-allowed">
@@ -176,9 +180,8 @@ const UploadSection: React.FC = () => {
                     fill="currentFill"
                   />
                 </svg>
-                <span className="sr-only mx-auto">Loading...</span>
               </div>
-              <span>Parsing Aadhaar</span>
+              <span>Parsing</span>
             </li>
           </ul>
         )}
