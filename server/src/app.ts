@@ -12,6 +12,10 @@ import { config } from "./config/config";
 
 class App{
     public app:Application;
+    public corsOptions = {
+        origin: config.NODE_ENV === 'PROD' ? config.CORS_URL_1 : config.CORS_URL_2,
+        credentials: true
+    };
     server:http.Server<typeof http.IncomingMessage,typeof http.ServerResponse>
 
     constructor(){
@@ -24,10 +28,8 @@ class App{
     
     private applyMiddleware(): void {
         this.app.use(express.json({ limit: "50mb" }));
-        this.app.use(cors({
-            origin: config.CORS_URL,
-            credentials: true
-        }));
+        this.app.use(cors(this.corsOptions));
+
         this.app.use(helmet());
         this.app.use(logger("dev")); 
         this.app.use(cookieParser());
