@@ -23,7 +23,6 @@ const AadharSchema: Schema<AadharInterface> = new Schema({
     aadhaarNumber: {
         type: String,
         required: true,
-        unique:true
     },
     gender: {
         type: String,
