@@ -2,14 +2,26 @@ import { Request, Response } from 'express';
 import { extractAadhaarInfo } from "../../utils/extractAdharInfo";
 import { extractTextFromImage } from "../../utils/tesseract";
 
+type MulterFiles = {
+  [fieldname: string]: Express.Multer.File[];
+};
+
 export default class Controller {
-  postAadhaar = async (req: Request, res: Response): Promise<Response> => {
+  postAadhaar = async (req: Request, res: Response): Promise<void> => {
     try {
-      const frontImage = Array.isArray(req.files) ? req.files[0] : req.files?.['frontImage']?.[0] || null;
-      const backImage = Array.isArray(req.files) ? req.files[1] : req.files?.['backImage']?.[0] || null;
+      const files = req.files as MulterFiles | undefined;
+
+      if (!files) {
+        res.status(400).json({ status: false, message: "No files were uploaded." });
+        return;
+      }
+
+      const frontImage = files['frontImage']?.[0];
+      const backImage = files['backImage']?.[0];
 
       if (!frontImage || !backImage) {
-        return res.status(400).json({ status: false, message: "Both front side and backside images are required." });
+        res.status(400).json({ status: false, message: "Both front side and backside images are required." });
+        return;
       }
 
       const frontImageText = await extractTextFromImage(frontImage.buffer);
@@ -18,13 +30,13 @@ export default class Controller {
       const extractedInfo = extractAadhaarInfo(frontImageText, backImageText);
 
       if (extractedInfo) {
-        return res.status(200).json({ status: true, data: extractedInfo, message: "Parsing successful" });
+        res.status(200).json({ status: true, data: extractedInfo, message: "Parsing successful" });
       } else {
-        return res.status(400).json({ status: false, message: "Failed to extract information" });
+        res.status(400).json({ status: false, message: "Failed to extract information" });
       }
     } catch (error) {
       console.error('Error parsing Aadhaar:', error);
-      return res.status(500).json({ status: false, message: 'Error parsing Aadhaar' });
+      res.status(500).json({ status: false, message: 'Error parsing Aadhaar' });
     }
   }
 }

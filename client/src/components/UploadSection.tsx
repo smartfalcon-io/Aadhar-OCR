@@ -1,12 +1,16 @@
 import React, { useRef, useState } from 'react';
 import { useParseAadharMutation } from '../api/axiosApi';
 import { toast, Toaster } from 'sonner';
+import { setParsedData } from '../stores/aadharSlice';
+import { useDispatch } from 'react-redux';
 
 const UploadSection: React.FC = () => {
   const [frontImage, setFrontImg] = useState<string | ArrayBuffer | null>(null);
   const [backImage, setBackImg] = useState<string | ArrayBuffer | null>(null);
   const [frontFile, setFrontFile] = useState<File | null>(null);
   const [backFile, setBackFile] = useState<File | null>(null);
+
+  const dispatch = useDispatch()
 
   const [parseAadhar, { isLoading }] = useParseAadharMutation();
 
@@ -69,10 +73,13 @@ const UploadSection: React.FC = () => {
       if (!frontFile || !backFile) {
         toast.error('Add both front side and back side of aadhaar');
       } else {
-        await parseAadhar({
+
+        const response = await parseAadhar({
           frontImage: frontFile,
           backImage: backFile,
         }).unwrap();
+    dispatch(setParsedData(response.data));
+
         toast.success('Aadhaar parsed successfully');
       }
     } catch (error) {
@@ -84,7 +91,6 @@ const UploadSection: React.FC = () => {
   return (
     <div className="flex-1 space-y-10 w-full lg:w-auto">
       <Toaster position="top-center" expand={false} richColors />
-      {/* Front Image Upload */}
       <div>
         <h2 className="font-medium pl-2 pb-3">Aadhaar Front</h2>
         <div
@@ -111,7 +117,6 @@ const UploadSection: React.FC = () => {
           />
         </div>
       </div>
-      {/* Back Image Upload */}
       <div className="mt-10">
         <h2 className="font-medium pl-2 pb-3">Aadhaar Back</h2>
         <div
@@ -138,7 +143,6 @@ const UploadSection: React.FC = () => {
           />
         </div>
       </div>
-      {/* Submit Button */}
       <div onClick={handleSubmit} className="flex bg-blue-400 mt-5 p-2 w-full lg:w-96 rounded-xl cursor-pointer hover:bg-blue-500">
         {!isLoading ? (
           <button className="mx-auto font-semibold text-white">
