@@ -17,7 +17,7 @@ const aadharSlice = createSlice({
   name: 'aadharSlice',
   initialState,
   reducers: {
-    setParsedData: (state, action: PayloadAction<parsedData>) => {
+    setParsedData: (state, action: PayloadAction<parsedData | null>) => {
       state.aadharDetails = action.payload;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {

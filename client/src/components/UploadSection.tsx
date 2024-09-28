@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useParseAadharMutation } from '../api/axiosApi';
 import { toast, Toaster } from 'sonner';
-import { setParsedData } from '../stores/aadharSlice';
+import { setParsedData,setLoading } from '../stores/aadharSlice';
 import { useDispatch } from 'react-redux';
 
 const UploadSection: React.FC = () => {
@@ -45,6 +45,10 @@ const UploadSection: React.FC = () => {
     }
   };
 
+  if(isLoading){
+    dispatch(setLoading(true))
+  }
+
   const handleImageBackChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -73,14 +77,18 @@ const UploadSection: React.FC = () => {
       if (!frontFile || !backFile) {
         toast.error('Add both front side and back side of aadhaar');
       } else {
-
+        dispatch(setParsedData(null))
         const response = await parseAadhar({
           frontImage: frontFile,
           backImage: backFile,
         }).unwrap();
+        if(response.status){
     dispatch(setParsedData(response.data));
+    dispatch(setLoading(false))
+    toast.success('Aadhaar parsed successfully');
 
-        toast.success('Aadhaar parsed successfully');
+        }
+
       }
     } catch (error) {
       console.log('Error occurred while submitting', error);
