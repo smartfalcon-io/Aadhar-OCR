@@ -19,14 +19,16 @@ Please contact the admin to collect the necessary environment variables required
 
 - Docker
 
-### Installation
-
-```bash
-git clone https://github.com/yourusername/Aadhar-OCR-System.git
-cd Aadhar-OCR-System
-docker compose up
 
 ##  Usage
 Access the application frontend at http://localhost:8001.
+
+### Installation
+
+```bash
+git clone https://github.com/suhailabdaz/Aadhar-OCR.git
+cd Aadhar-OCR-System
+docker compose up
+
 
 
