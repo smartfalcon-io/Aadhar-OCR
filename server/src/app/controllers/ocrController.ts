@@ -1,12 +1,18 @@
 import { Request, Response } from 'express';
 import { extractAadhaarInfo } from "../../utils/extractAdharInfo";
 import { extractTextFromImage } from "../../utils/tesseract";
+import { IController } from '../../interfaces/iController';
+import aadharRepository from "../repository/aadharRepository";
+
+const aadahrRepo=new aadharRepository()
+
+
 
 type MulterFiles = {
   [fieldname: string]: Express.Multer.File[];
 };
 
-export default class Controller {
+export default class Controller implements IController {
   postAadhaar = async (req: Request, res: Response): Promise<void> => {
     try {
       const files = req.files as MulterFiles | undefined;
@@ -30,6 +36,7 @@ export default class Controller {
       const extractedInfo = extractAadhaarInfo(frontImageText, backImageText);
 
       if (extractedInfo) {
+        await aadahrRepo.createAadharDoc(extractedInfo)
         res.status(200).json({ status: true, data: extractedInfo, message: "Parsing successful" });
       } else {
         res.status(400).json({ status: false, message: "Failed to extract information" });

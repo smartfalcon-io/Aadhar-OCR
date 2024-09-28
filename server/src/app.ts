@@ -19,6 +19,7 @@ class App{
         this.server=http.createServer(this.app)
         this.applyMiddleware()
         this.routes()
+        connectDB()
     }
     
     private applyMiddleware(): void {
