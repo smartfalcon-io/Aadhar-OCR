@@ -26,9 +26,9 @@ Access the application frontend at http://localhost:8001.
 ### Installation
 
 ```bash
+
 git clone https://github.com/suhailabdaz/Aadhar-OCR.git
+
 cd Aadhar-OCR-System
-docker compose up
 
-
-
+docker compose up --build
