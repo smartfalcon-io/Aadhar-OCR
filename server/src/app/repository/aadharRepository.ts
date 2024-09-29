@@ -25,7 +25,7 @@ export default class aadharRepository implements IRepository {
       // Return the newly created document
       return savedAadharDoc.toObject() as AadhaarInfo;
     } catch (err) {
-      console.error(`Error creating personal chat: ${err}`);
+      console.error(`Error in db op: ${err}`);
       return null;
     }
   };
