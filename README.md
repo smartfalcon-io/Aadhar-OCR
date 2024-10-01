@@ -2,6 +2,10 @@
 
 A real-time Aadhaar Optical Character Recognition (OCR) system that extracts and displays Aadhaar details from front and back images of the Aadhaar card. The system is built using **Vite-React** for the frontend, utilizing **RTK Query** for efficient data fetching and state management. The backend, developed with **Node.js** and **Express** in a microservice architecture, and **MongoDB** for storing user data.
 
+
+![Screenshot 2024-10-01 093111](https://github.com/user-attachments/assets/977e10f7-2306-49d8-8ed5-405dc8208c30)
+
+
 ## Features
 
 - **Frontend**: Vite-React with RTK Query for fast, efficient data fetching and state management.
