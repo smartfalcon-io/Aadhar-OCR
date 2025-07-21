@@ -1,5 +1,5 @@
 import { Application } from "express";
-import connectDB from "./config/mongoDB";
+// import connectDB from "./config/mongoDB";
 import express from "express";
 import route from "./app/routes/routes";
 import http from 'http'
@@ -23,7 +23,7 @@ class App{
         this.server=http.createServer(this.app)
         this.applyMiddleware()
         this.routes()
-        connectDB()
+        // connectDB()
     }
     
     private applyMiddleware(): void {

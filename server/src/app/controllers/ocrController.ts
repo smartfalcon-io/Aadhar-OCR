@@ -36,7 +36,7 @@ export default class Controller implements IController {
       const extractedInfo = extractAadhaarInfo(frontImageText, backImageText);
 
       if (extractedInfo) {
-        await aadahrRepo.createAadharDoc(extractedInfo)
+        // await aadahrRepo.createAadharDoc(extractedInfo)
         res.status(200).json({ status: true, data: extractedInfo, message: "Parsing successful" });
       } else {
         res.status(400).json({ status: false, message: "Failed to extract information" });

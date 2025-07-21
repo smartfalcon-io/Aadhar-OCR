@@ -1,14 +1,14 @@
 services:
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    env_file:
-      - ./client/.env
-    ports:
-      - "8001:8001"
-    networks:
-      - my-network
+  # client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #   env_file:
+  #     - ./client/.env
+  #   ports:
+  #     - "8001:8001"
+  #   networks:
+  #     - my-network
 
   server:
     build:
