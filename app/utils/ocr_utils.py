@@ -14,11 +14,12 @@ def extract_aadhaar_info(front_text: str, back_text: str) -> Dict[str, Optional[
 
     def normalize_digits(text: str) -> str:
         return (
-            text.replace("O", "0")
-            .replace("I", "1")
-            .replace("l", "1")
-            .replace("|", "1")
-        )
+        text.replace("O", "0")
+        .replace("I", "1")
+        .replace("l", "1")
+        .replace("|", "1")
+    )
+
 
     front = clean(front_text)
     back = clean(back_text)
