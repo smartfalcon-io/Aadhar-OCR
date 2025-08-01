@@ -19,24 +19,29 @@ export const extractAadhaarInfo = (frontText: string, backText: string): Aadhaar
 
   // Extract DOB
   // Updated to match both DD/MM/YYYY and YYYY formats, and "Year of Birth" prefix
-  const dobPattern = /(?:Date of Birth|DOB|Year of Birth)[: ]?\s*(\d{2}\/\d{2}\/\d{4}|\d{4})/i;
-  const dobMatch = cleanFrontText.match(dobPattern);
-  info.dob = dobMatch ? dobMatch[1] : null;
+  // Extract DOB
+if (cleanFrontText.includes("Date of Birth") || cleanFrontText.includes("DOB")){
+	  const dobPattern = /(?:Date of Birth|DOB) ?:? *(\d{2}\/\d{2}\/\d{4})/i;
+	  const dobMatch = cleanFrontText.match(dobPattern);
+	  info.dob = dobMatch ? dobMatch[1] : null;
+} 
+if (cleanFrontText.includes("Year of Birth")){
+	console.log("testing")
+	const dobPattern = /(?:Date of Birth|DOB|Y.*?ar of Birth)[: ]?\s*(\d{2}\/\d{2}\/\d{4}|\d{4})/i;
+	const dobMatch = cleanFrontText.match(dobPattern);
+	info.dob = dobMatch ? dobMatch[1] : null;
+}
 
   // Extract Aadhaar Number (retained from previous version, as it was not part of the current request to change)
+  // Extract Aadhaar Number
   const aadhaarPattern = /(\d{4} \d{4} \d{4})/;
   const aadhaarMatch = cleanFrontText.match(aadhaarPattern);
   info.aadhaarNumber = aadhaarMatch ? aadhaarMatch[1] : null;
 
   // Extract Gender
-  // Updated to include 'Mala' as a possible match and normalize it to 'Male'
-  const genderPattern = /\b(Male|Mala|Female)\b/i;
+  const genderPattern = /\b(Male|Female|Transgender)\b/i;
   const genderMatch = cleanFrontText.match(genderPattern);
-  if (genderMatch) {
-    info.gender = genderMatch[1].toLowerCase() === 'mala' ? 'Male' : genderMatch[1];
-  } else {
-    info.gender = null;
-  }
+  info.gender = genderMatch ? genderMatch[1] : null;
 
   // Extract Name
   // Updated pattern to flexibly capture names after common prefixes, expecting at least two words
