@@ -41,7 +41,9 @@ export default class Controller implements IController {
 
 			const extractedInfo = extractAadhaarInfo(frontImageText, backImageText);
 
-			if (frontImageText.toLowerCase().includes(name.toLowerCase()) && (extractedInfo.name?.toLowerCase() == name.toLowerCase()) && (extractedInfo.dob == dob || extractedInfo.dob == getYearFromDateString(dob))) {
+			if (frontImageText.toLowerCase().includes(name.toLowerCase()) && 
+				// (extractedInfo.name?.toLowerCase() == name.toLowerCase()) && 
+				(extractedInfo.dob == dob || extractedInfo.dob == getYearFromDateString(dob))) {
 					res.status(200).json({ status: true, verified: true, message: "Aadhaar contains name" });
 			} else {
 				res.status(200).json({ status: true, verified: false, message: "Aadhaar does not contain name" });
