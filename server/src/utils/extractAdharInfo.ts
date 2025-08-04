@@ -45,10 +45,12 @@ if (cleanFrontText.includes("Year of Birth")){
 
   // Extract Name
   // Updated pattern to flexibly capture names after common prefixes, expecting at least two words
-  const namePattern = /(?:z\s*\|\s*|T8\s*86\s*\.?\s*)([A-Z][a-z]+(?:\s[A-Z][a-z]+){1,})/i;
+  // const namePattern = /(?:z\s*\|\s*|T8\s*86\s*\.?\s*)([A-Z][a-z]+(?:\s[A-Z][a-z]+){1,})/i;
+  // const nameMatch = cleanFrontText.match(namePattern);
+  // info.name = nameMatch ? nameMatch[1].trim() : null;
+  const namePattern = /([A-Z][a-z]+(?:\s[A-Z][a-z]+){1,})/i;
   const nameMatch = cleanFrontText.match(namePattern);
   info.name = nameMatch ? nameMatch[1].trim() : null;
-
   // Extract Address
   const addressPattern = /Address:\s*([\s\S]*?)(?:\d{6}|$)/i;
   const addressMatch = cleanBackText.match(addressPattern);
