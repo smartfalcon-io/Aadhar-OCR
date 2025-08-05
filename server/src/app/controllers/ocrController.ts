@@ -43,7 +43,7 @@ export default class Controller implements IController {
 
 			if (frontImageText.toLowerCase().includes(name.toLowerCase()) && 
 				// (extractedInfo.name?.toLowerCase() == name.toLowerCase()) && 
-				(extractedInfo.dob == dob || extractedInfo.dob == getYearFromDateString(dob))) {
+				(extractedInfo.dob == dob || extractedInfo.dob == getYearFromDateString(dob))&&(extractedInfo.gender?.toLowerCase()==gender.toLowerCase())) {
 					res.status(200).json({ status: true, verified: true, message: "Aadhaar contains name" });
 			} else {
 				res.status(200).json({ status: true, verified: false, message: "Aadhaar does not contain name" });
