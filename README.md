@@ -20,3 +20,12 @@ A simple OCR (Optical Character Recognition) API built with FastAPI that extract
 
 ```bash
 uvicorn app.main:app --reload
+
+```bash
+docker build -t my-fastapi-ocr-app .
+
+```bash
+docker run -d -p 8000:8000 --name fastapi-ocr-container my-fastapi-ocr-app
+
+```bash
+docker logs -f fastapi-ocr-container
