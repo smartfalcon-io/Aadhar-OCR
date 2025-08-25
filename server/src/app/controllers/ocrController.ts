@@ -25,6 +25,7 @@ export default class Controller implements IController {
 			}
 
 			const frontImage = files['frontImage']?.[0];
+			console.info(`frontImage Size: ${(frontImage.size) / (1024 * 1024)}`)
 			const backImage = files['backImage']?.[0];
 
 			if (!frontImage || !backImage) {
@@ -41,10 +42,10 @@ export default class Controller implements IController {
 
 			const extractedInfo = extractAadhaarInfo(frontImageText, backImageText);
 
-			if (frontImageText.toLowerCase().includes(name.toLowerCase()) && 
+			if (frontImageText.toLowerCase().includes(name.toLowerCase()) &&
 				// (extractedInfo.name?.toLowerCase() == name.toLowerCase()) && 
-				(extractedInfo.dob == dob || extractedInfo.dob == getYearFromDateString(dob))&&(extractedInfo.gender?.toLowerCase()==gender.toLowerCase())) {
-					res.status(200).json({ status: true, verified: true, message: "Aadhaar contains name" });
+				(extractedInfo.dob == dob || extractedInfo.dob == getYearFromDateString(dob)) && (extractedInfo.gender?.toLowerCase() == gender.toLowerCase())) {
+				res.status(200).json({ status: true, verified: true, data: extractedInfo, message: "Aadhaar contains name" });
 			} else {
 				res.status(200).json({ status: true, verified: false, message: "Aadhaar does not contain name" });
 			}
