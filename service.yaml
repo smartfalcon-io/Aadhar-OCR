@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: divs-aadhaar-ocr
+  namespace: divs-sandbox
+spec:
+  selector:
+    app: divs-aadhaar-ocr      
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: LoadBalancer
