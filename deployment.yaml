@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: divs-aadhaar-ocr
+  namespace: divs-sandbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: divs-aadhaar-ocr
+  template:
+    metadata:
+      labels:
+        app: divs-aadhaar-ocr
+    spec:
+      imagePullSecrets:
+        - name: ecr-registry-secret
+      containers:
+        - name: divs-aadhar-ocr
+          image: 752749714540.dkr.ecr.ap-south-1.amazonaws.com/divs/divs-aadhaar-ocr:v2.0.0
+          imagePullPolicy: IfNotPresent  
+          ports:
+            - containerPort: 8000
+          command: ["uvicorn"]
+          args: ["app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+          env:
+            - name: KAFKA_BROKER
+              value: "kafka-divs-kafka-bootstrap.common.svc:9092"
+            - name: KAFKA_TOPIC_IN
+              value: "divs_sandbox_aadhaar"
+            - name: KAFKA_TOPIC_OUT
+              value: "divs_sandbox_verifier"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: access-key-id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: secret-access-key
